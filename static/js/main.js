@@ -11,7 +11,6 @@ $(() => {
 
     var random_number = Math.floor(Math.random() * 9999)
 
-
     $('#dark-icon').hide()
 
     $('#light-icon, #dark-icon').on('click', (e) => {
@@ -24,21 +23,32 @@ $(() => {
     })
 
     $('#addButton').on('click', (e) => {
-        $('form').append('<textarea name="body" name="body[]" placeholder=" Give it some text"></textarea><br>')
+        $('form').append(`<textarea name="body" name="body" placeholder=" Give it some text"></textarea><br>`)
     })
 
-    $('#createPDF').on('click', (e) => {
+    $('#createPDF').one('click', (e) => {
         e.preventDefault();
-        var form = $('#container form')
-        $.ajax({
-            type: 'POST',
-            url: '/',
-            data: JSON.stringify(form.serializeArray()),
-            contentType: 'application/json',
-            dataType: 'json'
-        })
-         $('#container form').trigger('reset')
+        if($('input[type="text"]').val() == 0 ){
+            $('input[type="text"], textarea').addClass('error')
+        } else {
+            $('input[type="text"], textarea').removeClass('error')
+            var form = $('#container form')
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: JSON.stringify(form.serializeArray()),
+                contentType: 'application/json',
+                dataType: 'json'
+            })
+            $('#container form').trigger('reset')
+            $('#createPDF').css({'background' : '#941e1a'})
+            var password = $('#password').attr('value')
+            $('#container form').prepend(`<br><p class="result">The password for your PDF is <span>${password}</span></p><br>`)
+            $('#container').append('<footer><p>Please refresh the page if you would like to generate another pdf</p></footer>')
+        }
     })
+
+
 
 })
 

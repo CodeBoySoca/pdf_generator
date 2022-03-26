@@ -11,8 +11,10 @@
     <p>Create a PDF from your text</p> 
    <form method="post">
      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-     <input type="text" name="filename" placeholder=" Give your PDF a filename" required><br>
-     <textarea name="body" name="body[]" placeholder=" Give it some text"></textarea><br>
+     <input type="hidden" name="password" value="{{ password }}" id="password">
+     <input type="text" name="filename" id="filename" placeholder=" Give your PDF a filename" required><br>
+     <input type="text" name="header" id="header" placeholder=" Add a header" required><br>
+     <textarea name="body" placeholder=" Give it some text"></textarea><br>
    </form>
    <button id="addButton"><i class="fa-solid fa-file"></i> Add another text field</button>
    <button type="submit" id="createPDF" name="createPDF"><i class="fa-solid fa-file"></i> Create PDF</button>
